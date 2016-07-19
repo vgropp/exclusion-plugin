@@ -1,23 +1,30 @@
 package org.jvnet.hudson.plugins.exclusion;
 
-import hudson.EnvVars;
-import hudson.Extension;
-import hudson.FilePath;
-import hudson.Launcher;
-import hudson.model.*;
-import hudson.model.listeners.ItemListener;
-import hudson.tasks.BuildWrapper;
-import jenkins.tasks.SimpleBuildWrapper;
-import net.sf.json.JSONObject;
-import org.kohsuke.accmod.Restricted;
-import org.kohsuke.accmod.restrictions.NoExternalUse;
-import org.kohsuke.stapler.StaplerRequest;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.kohsuke.accmod.Restricted;
+import org.kohsuke.accmod.restrictions.NoExternalUse;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.StaplerRequest;
+
+import hudson.EnvVars;
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.model.Computer;
+import hudson.model.Descriptor;
+import hudson.model.Executor;
+import hudson.model.Item;
+import hudson.model.Run;
+import hudson.model.TaskListener;
+import hudson.model.listeners.ItemListener;
+import hudson.tasks.BuildWrapper;
+import jenkins.tasks.SimpleBuildWrapper;
+import net.sf.json.JSONObject;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -30,6 +37,7 @@ public class IdAllocator extends SimpleBuildWrapper {
     private static List<RessourcesMonitor> listRessources = new ArrayList<RessourcesMonitor>();
     private static String jName = "unknow";
 
+    @DataBoundConstructor
     public IdAllocator(IdType[] ids) {
         this.ids = ids;
     }
